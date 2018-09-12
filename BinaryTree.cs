@@ -6,17 +6,45 @@ namespace binary_tree
 	public class BinaryTree<TValue>
 		where TValue : IComparable<TValue>
 	{
-		private class Node<T>
+		private class Node<T> : IComparable<Node<T>>, IComparable<T>
+			where T : IComparable<T>
 		{
 			public T Value { get; set; }
-			public Node<T> Left { get; set; }
-			public Node<T> Right { get; set; }
+
+			// private Node<T> _left;
+			public Node<T> Left;// { get => _left; set{_left = value;} }
+
+			// private Node<T> _right;
+			public Node<T> Right;// { get => _right; set{_right = value;} }
 
 			public Node(T value)
 			{
 				Value = value;
 			}
+
+			public override string ToString() => $"Node({Value})";
+
+			public int CompareTo(Node<T> other) => this.Value.CompareTo(other.Value);
+
+			public int CompareTo(T other) => this.Value.CompareTo(other);
+
+
+			public ref Node<T> GetLegFor(Node<T> childNode)
+			{
+				if (childNode == Left)
+				{
+					return ref Left;
+				}
+
+				if (childNode == Right)
+				{
+					return ref Right;
+				}
+
+				throw new InvalidOperationException();
+			}
 		}
+
 
 		private Node<TValue> _root = null;
 
@@ -61,47 +89,23 @@ namespace binary_tree
 			return false;
 		}
 
-		public void Remove(TValue value)
-		{
-			throw new NotImplementedException();
-		}
-
 		public bool Contains(TValue value)
 		{
-			if (_root == null)
-			{
-				return false;
-			}
-
-			return Contains(_root, value);
+			var foundNode = FindNode(value);
+			return foundNode != null;
 		}
 
-		private bool Contains(Node<TValue> target, TValue value)
-		{
-			var cmp = value.CompareTo(target.Value);
-
-			if (cmp == 0)
-			{
-				return true;
-			}
-
-			if (cmp < 0 && target.Left != null)
-			{
-				return Contains(target.Left, value);
-			}
-
-			if (cmp > 0 && target.Right != null)
-			{
-				return Contains(target.Right, value);
-			}
-
-			return false;
-		}
-
-		public int Size()
+		public int Count()
 		{
 			int count = 0;
 			Walk(value => { count++; }, _root);
+			return count;
+		}
+
+		public int Count(TValue rangeFrom, TValue rangeTo)
+		{
+			int count = 0;
+			Walk(value => { count++; }, _root, rangeFrom, rangeTo);
 			return count;
 		}
 
@@ -112,29 +116,161 @@ namespace binary_tree
 			return list;
 		}
 
-		private void Walk(Action<TValue> fn, Node<TValue> target)
+		public IList<TValue> ToSortedList(TValue rangeFrom, TValue rangeTo)
 		{
-			if (target.Left != null)
+			var list = new List<TValue>();
+			Walk(list.Add, _root, rangeFrom, rangeTo);
+			return list;
+		}
+
+		private void Walk(Action<TValue> action, Node<TValue> target)
+		{
+			if (target == null)
 			{
-				Walk(fn, target.Left);
+				return;
 			}
 
-			fn(target.Value);
+			Walk(action, target.Left);
 
-			if (target.Right != null)
+			action(target.Value);
+
+			Walk(action, target.Right);
+		}
+
+		private void Walk(Action<TValue> action, Node<TValue> target, TValue rangeFrom, TValue rangeTo)
+		{
+			if (target == null)
 			{
-				Walk(fn, target.Right);
+				return;
+			}
+
+			if (target.Value.CompareTo(rangeFrom) > 0)
+			{
+				Walk(action, target.Left, rangeFrom, rangeTo);
+			}
+
+			if (target.Value.CompareTo(rangeTo) <= 0 && target.Value.CompareTo(rangeFrom) >= 0)
+			{
+				action(target.Value);
+			}
+
+			if (target.Value.CompareTo(rangeTo) < 0)
+			{
+				Walk(action, target.Right, rangeFrom, rangeTo);
 			}
 		}
 
-		private bool FindNearestBiggerThan(Node<TValue> node)
+		public bool Remove(TValue value)
 		{
-			throw new NotImplementedException();
+			var nodeToRemove = FindNode(value);
+			System.Console.WriteLine($"*** nodeToRemove: {nodeToRemove}");
+			if (nodeToRemove == null)
+			{
+				return false;
+			}
+
+			// zero or one leg
+			ref var legOfParentOfNodeToRemove = ref GetReferenceToChange(nodeToRemove);
+			if (nodeToRemove.Left == null || nodeToRemove.Right == null)
+			{
+				legOfParentOfNodeToRemove = nodeToRemove.Left ?? nodeToRemove.Right ?? null;
+				return true;
+			}
+
+			// two legs
+			var replacementNode = FindNearestNodeBiggerThan(nodeToRemove);
+			System.Console.WriteLine($"*** replacementNode: {replacementNode}");
+
+			var parentOfReplacementNode = FindParentNode(replacementNode);
+			System.Console.WriteLine($"*** parentOfReplacementNode: {parentOfReplacementNode}");
+
+if(parentOfReplacementNode == nodeToRemove)
+{
+// handle this special case - good night
+}
+
+			parentOfReplacementNode.Right = replacementNode.Right;
+			replacementNode.Left = null;
+			replacementNode.Right = nodeToRemove.Right;
+
+			legOfParentOfNodeToRemove = replacementNode;
+
+			return true;
 		}
 
-		private bool FindParent(Node<TValue> node)
+		private ref Node<TValue> GetReferenceToChange(Node<TValue> nodeToRemove)
 		{
-			throw new NotImplementedException();
+			if (nodeToRemove == _root) return ref _root;
+			var parentOfNodeToRemove = FindParentNode(nodeToRemove);
+			return ref parentOfNodeToRemove.GetLegFor(nodeToRemove);
+		}
+
+		private Node<TValue> FindNearestNodeBiggerThan(Node<TValue> startNode) => FindNearestNodeBiggerThan(startNode, startNode);
+
+		private Node<TValue> FindNearestNodeBiggerThan(Node<TValue> targetNode, Node<TValue> startNode)
+		{
+			if (targetNode == null)
+			{
+				return null;
+			}
+
+			if (targetNode == startNode)
+			{
+				return FindNearestNodeBiggerThan(targetNode.Right, startNode);
+			}
+
+			if (targetNode.Left != null)
+			{
+				return FindNearestNodeBiggerThan(targetNode.Left, startNode);
+			}
+
+			return targetNode;
+		}
+
+		private Node<TValue> FindParentNode(Node<TValue> childNode)
+		{
+			return FindNode(node => node.Left == childNode || node.Right == childNode ? 0 : node.CompareTo(childNode), _root);
+		}
+
+		public TValue Find(TValue value, bool throwOnNotFound = false)
+		{
+			var foundNode = FindNode(node => node.CompareTo(value), _root);
+			return foundNode != null
+					? foundNode.Value
+					: throwOnNotFound
+						? throw new Exception()
+						: default(TValue);
+		}
+
+		private Node<TValue> FindNode(TValue value)
+		{
+			var foundNode = FindNode(node => node.CompareTo(value), _root);
+			return foundNode;
+		}
+
+		private Node<TValue> FindNode(Func<Node<TValue>, int> comparer, Node<TValue> target)
+		{
+			if (target == null)
+			{
+				return null;
+			}
+
+			if (comparer(target) == 0)
+			{
+				return target;
+			}
+
+			if (comparer(target) > 0)
+			{
+				return FindNode(comparer, target.Left);
+			}
+
+			if (comparer(target) < 0)
+			{
+				return FindNode(comparer, target.Right);
+			}
+
+			return null;
 		}
 	}
 }
