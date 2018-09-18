@@ -1,0 +1,14 @@
+/Users/arjan/dev/playgrounds/binary-tree/tests/bin/Debug/netcoreapp2.1/xunit.runner.visualstudio.dotnetcore.testadapter.dll
+/Users/arjan/dev/playgrounds/binary-tree/tests/bin/Debug/netcoreapp2.1/xunit.runner.reporters.netcoreapp10.dll
+/Users/arjan/dev/playgrounds/binary-tree/tests/bin/Debug/netcoreapp2.1/xunit.runner.utility.netcoreapp10.dll
+/Users/arjan/dev/playgrounds/binary-tree/tests/bin/Debug/netcoreapp2.1/tests.deps.json
+/Users/arjan/dev/playgrounds/binary-tree/tests/bin/Debug/netcoreapp2.1/tests.runtimeconfig.json
+/Users/arjan/dev/playgrounds/binary-tree/tests/bin/Debug/netcoreapp2.1/tests.runtimeconfig.dev.json
+/Users/arjan/dev/playgrounds/binary-tree/tests/bin/Debug/netcoreapp2.1/tests.dll
+/Users/arjan/dev/playgrounds/binary-tree/tests/bin/Debug/netcoreapp2.1/tests.pdb
+/Users/arjan/dev/playgrounds/binary-tree/tests/obj/Debug/netcoreapp2.1/tests.csprojAssemblyReference.cache
+/Users/arjan/dev/playgrounds/binary-tree/tests/obj/Debug/netcoreapp2.1/tests.csproj.CoreCompileInputs.cache
+/Users/arjan/dev/playgrounds/binary-tree/tests/obj/Debug/netcoreapp2.1/tests.AssemblyInfoInputs.cache
+/Users/arjan/dev/playgrounds/binary-tree/tests/obj/Debug/netcoreapp2.1/tests.AssemblyInfo.cs
+/Users/arjan/dev/playgrounds/binary-tree/tests/obj/Debug/netcoreapp2.1/tests.dll
+/Users/arjan/dev/playgrounds/binary-tree/tests/obj/Debug/netcoreapp2.1/tests.pdb

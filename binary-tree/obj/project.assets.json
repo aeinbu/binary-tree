@@ -687,11 +687,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/arjan/dev/playgrounds/binary-tree/binary-tree.csproj",
+      "projectUniqueName": "/Users/arjan/dev/playgrounds/binary-tree/binary-tree/binary-tree.csproj",
       "projectName": "binary-tree",
-      "projectPath": "/Users/arjan/dev/playgrounds/binary-tree/binary-tree.csproj",
+      "projectPath": "/Users/arjan/dev/playgrounds/binary-tree/binary-tree/binary-tree.csproj",
       "packagesPath": "/Users/arjan/.nuget/packages/",
-      "outputPath": "/Users/arjan/dev/playgrounds/binary-tree/obj/",
+      "outputPath": "/Users/arjan/dev/playgrounds/binary-tree/binary-tree/obj/",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"

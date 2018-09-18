@@ -12,7 +12,7 @@ namespace binary_tree
             // 68	65	87	39	18
             // 23	57	77	68	14
             // 30	34	43	90	96
-            // 75	30	19	78	77
+            // 78	30	19	78	77
             // 98	53	62	44	37
             // 24	64	39	82	10
             // 14
@@ -22,18 +22,18 @@ namespace binary_tree
             tree.Add(74);
             tree.Add(68);
             tree.Add(23);
-            tree.Add(30);
-            tree.Add(75);
-            tree.Add(98);
+            // tree.Add(30);
+            tree.Add(78);
+            // tree.Add(98);
             tree.Add(24);
             Console.WriteLine($"Add(14): {tree.Add(14)}");
-            Console.WriteLine($"Add(75): {tree.Add(75)}");
+            // Console.WriteLine($"Add(75): {tree.Add(75)}");
 
-            Console.WriteLine($"Contains(23): {tree.Contains(23)}");
-            Console.WriteLine($"Contains(1000): {tree.Contains(1000)}");
+            // Console.WriteLine($"Contains(23): {tree.Contains(23)}");
+            // Console.WriteLine($"Contains(1000): {tree.Contains(1000)}");
 
-            Console.WriteLine($"Find(75): {tree.Find(75)}");
-            Console.WriteLine($"Find(12): {tree.Find(12)}");
+            // Console.WriteLine($"Find(75): {tree.Find(75)}");
+            // Console.WriteLine($"Find(12): {tree.Find(12)}");
 
             Console.WriteLine();
             Console.WriteLine("These are the values:");

@@ -11,11 +11,9 @@ namespace binary_tree
 		{
 			public T Value { get; set; }
 
-			// private Node<T> _left;
-			public Node<T> Left;// { get => _left; set{_left = value;} }
+			public Node<T> Left;
 
-			// private Node<T> _right;
-			public Node<T> Right;// { get => _right; set{_right = value;} }
+			public Node<T> Right;
 
 			public Node(T value)
 			{
@@ -178,24 +176,61 @@ namespace binary_tree
 			}
 
 			// two legs
-			var replacementNode = FindNearestNodeBiggerThan(nodeToRemove);
-			System.Console.WriteLine($"*** replacementNode: {replacementNode}");
 
+
+			var rightNodeOfNodeToRemove = nodeToRemove.Right;
+			if (rightNodeOfNodeToRemove.Left == null)
+			{
+				rightNodeOfNodeToRemove.Left = nodeToRemove.Left;
+				legOfParentOfNodeToRemove = rightNodeOfNodeToRemove;
+				return true;
+			}
+
+			var replacementNode = GetLeftmostNode(rightNodeOfNodeToRemove);
+			System.Console.WriteLine($"*** replacementNode: {replacementNode}");
 			var parentOfReplacementNode = FindParentNode(replacementNode);
 			System.Console.WriteLine($"*** parentOfReplacementNode: {parentOfReplacementNode}");
+			if(parentOfReplacementNode != nodeToRemove)
+			{
+				System.Console.WriteLine("A");
+				parentOfReplacementNode.Left = replacementNode.Right;
+				legOfParentOfNodeToRemove = replacementNode;
+				replacementNode.Left = nodeToRemove.Left;
+				replacementNode.Right = parentOfReplacementNode;
+				return true;
+			}
+			else
+			{
+				System.Console.WriteLine("B");
+				legOfParentOfNodeToRemove = replacementNode;
+			}
 
-if(parentOfReplacementNode == nodeToRemove)
-{
-// handle this special case - good night
-}
+			// two legs
+			// 			var replacementNode = FindNearestNodeBiggerThan(nodeToRemove);
+			// 			System.Console.WriteLine($"*** replacementNode: {replacementNode}");
 
-			parentOfReplacementNode.Right = replacementNode.Right;
-			replacementNode.Left = null;
-			replacementNode.Right = nodeToRemove.Right;
+			// 			var parentOfReplacementNode = FindParentNode(replacementNode);
+			// 			System.Console.WriteLine($"*** parentOfReplacementNode: {parentOfReplacementNode}");
 
-			legOfParentOfNodeToRemove = replacementNode;
+			// if(parentOfReplacementNode == nodeToRemove)
+			// {
+			// // handle this special case - good night
+			// }
+
+			// 			parentOfReplacementNode.Right = replacementNode.Right;
+			// 			replacementNode.Left = null;
+			// 			replacementNode.Right = nodeToRemove.Right;
+
+			// 			legOfParentOfNodeToRemove = replacementNode;
 
 			return true;
+		}
+
+		private Node<TValue> GetLeftmostNode(Node<TValue> node)
+		{
+			return node.Left != null ?
+					GetLeftmostNode(node.Left) :
+					node;
 		}
 
 		private ref Node<TValue> GetReferenceToChange(Node<TValue> nodeToRemove)
@@ -235,11 +270,11 @@ if(parentOfReplacementNode == nodeToRemove)
 		public TValue Find(TValue value, bool throwOnNotFound = false)
 		{
 			var foundNode = FindNode(node => node.CompareTo(value), _root);
-			return foundNode != null
-					? foundNode.Value
-					: throwOnNotFound
-						? throw new Exception()
-						: default(TValue);
+			return foundNode != null ?
+				foundNode.Value :
+				throwOnNotFound ?
+					throw new Exception() :
+					default(TValue);
 		}
 
 		private Node<TValue> FindNode(TValue value)
@@ -247,6 +282,7 @@ if(parentOfReplacementNode == nodeToRemove)
 			var foundNode = FindNode(node => node.CompareTo(value), _root);
 			return foundNode;
 		}
+
 
 		private Node<TValue> FindNode(Func<Node<TValue>, int> comparer, Node<TValue> target)
 		{
@@ -274,3 +310,4 @@ if(parentOfReplacementNode == nodeToRemove)
 		}
 	}
 }
+
