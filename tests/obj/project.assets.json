@@ -1681,6 +1681,19 @@
         "build": {
           "build/netcoreapp1.0/xunit.runner.visualstudio.props": {}
         }
+      },
+      "binary-tree/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v2.1",
+        "dependencies": {
+          "Microsoft.NETCore.App": "2.1.0"
+        },
+        "compile": {
+          "bin/placeholder/binary-tree.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/binary-tree.dll": {}
+        }
       }
     }
   },
@@ -5729,12 +5742,18 @@
         "xunit.runner.visualstudio.2.3.1.nupkg.sha512",
         "xunit.runner.visualstudio.nuspec"
       ]
+    },
+    "binary-tree/1.0.0": {
+      "type": "project",
+      "path": "../binary-tree/binary-tree.csproj",
+      "msbuildProject": "../binary-tree/binary-tree.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.1": [
       "Microsoft.NET.Test.Sdk >= 15.8.0",
       "Microsoft.NETCore.App >= 2.1.0",
+      "binary-tree >= 1.0.0",
       "xunit >= 2.3.1",
       "xunit.runner.visualstudio >= 2.3.1"
     ]
@@ -5766,7 +5785,11 @@
       },
       "frameworks": {
         "netcoreapp2.1": {
-          "projectReferences": {}
+          "projectReferences": {
+            "/Users/arjan/dev/playgrounds/binary-tree/binary-tree/binary-tree.csproj": {
+              "projectPath": "/Users/arjan/dev/playgrounds/binary-tree/binary-tree/binary-tree.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

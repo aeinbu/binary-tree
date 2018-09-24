@@ -1,9 +1,10 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace binary_tree
 {
-	public class BinaryTree<TValue>
+	public class BinaryTree<TValue> : IEnumerable<TValue>
 		where TValue : IComparable<TValue>
 	{
 		private class Node<T> : IComparable<Node<T>>, IComparable<T>
@@ -190,39 +191,10 @@ namespace binary_tree
 			System.Console.WriteLine($"*** replacementNode: {replacementNode}");
 			var parentOfReplacementNode = FindParentNode(replacementNode);
 			System.Console.WriteLine($"*** parentOfReplacementNode: {parentOfReplacementNode}");
-			if(parentOfReplacementNode != nodeToRemove)
-			{
-				System.Console.WriteLine("A");
-				parentOfReplacementNode.Left = replacementNode.Right;
-				legOfParentOfNodeToRemove = replacementNode;
-				replacementNode.Left = nodeToRemove.Left;
-				replacementNode.Right = parentOfReplacementNode;
-				return true;
-			}
-			else
-			{
-				System.Console.WriteLine("B");
-				legOfParentOfNodeToRemove = replacementNode;
-			}
-
-			// two legs
-			// 			var replacementNode = FindNearestNodeBiggerThan(nodeToRemove);
-			// 			System.Console.WriteLine($"*** replacementNode: {replacementNode}");
-
-			// 			var parentOfReplacementNode = FindParentNode(replacementNode);
-			// 			System.Console.WriteLine($"*** parentOfReplacementNode: {parentOfReplacementNode}");
-
-			// if(parentOfReplacementNode == nodeToRemove)
-			// {
-			// // handle this special case - good night
-			// }
-
-			// 			parentOfReplacementNode.Right = replacementNode.Right;
-			// 			replacementNode.Left = null;
-			// 			replacementNode.Right = nodeToRemove.Right;
-
-			// 			legOfParentOfNodeToRemove = replacementNode;
-
+			parentOfReplacementNode.Left = replacementNode.Right;
+			legOfParentOfNodeToRemove = replacementNode;
+			replacementNode.Left = nodeToRemove.Left;
+			replacementNode.Right = nodeToRemove.Right;
 			return true;
 		}
 
@@ -307,6 +279,16 @@ namespace binary_tree
 			}
 
 			return null;
+		}
+
+		IEnumerator<TValue> IEnumerable<TValue>.GetEnumerator()
+		{
+			return (IEnumerator<TValue>)ToSortedList();
+		}
+
+		IEnumerator IEnumerable.GetEnumerator()
+		{
+			return ((IEnumerable<TValue>)this).GetEnumerator();
 		}
 	}
 }

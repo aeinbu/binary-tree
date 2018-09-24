@@ -9,6 +9,7 @@
       "tests/1.0.0": {
         "dependencies": {
           "Microsoft.NET.Test.Sdk": "15.8.0",
+          "binary-tree": "1.0.0",
           "xunit": "2.3.1",
           "xunit.runner.visualstudio": "2.3.1"
         },
@@ -1052,6 +1053,11 @@
         "dependencies": {
           "Microsoft.NET.Test.Sdk": "15.8.0"
         }
+      },
+      "binary-tree/1.0.0": {
+        "runtime": {
+          "binary-tree.dll": {}
+        }
       }
     }
   },
@@ -1592,6 +1598,11 @@
       "sha512": "sha512-B+RtW4dyBquEyjSAFyV5RMifaOZOirDwlzcIq2DNVGo1gzJS8PAPu5S+2y1n6ZgEMWbpqJf9TkZ55+X6FLdy3A==",
       "path": "xunit.runner.visualstudio/2.3.1",
       "hashPath": "xunit.runner.visualstudio.2.3.1.nupkg.sha512"
+    },
+    "binary-tree/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     }
   }
 }

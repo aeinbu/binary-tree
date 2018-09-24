@@ -12,3 +12,6 @@
 /Users/arjan/dev/playgrounds/binary-tree/tests/obj/Debug/netcoreapp2.1/tests.AssemblyInfo.cs
 /Users/arjan/dev/playgrounds/binary-tree/tests/obj/Debug/netcoreapp2.1/tests.dll
 /Users/arjan/dev/playgrounds/binary-tree/tests/obj/Debug/netcoreapp2.1/tests.pdb
+/Users/arjan/dev/playgrounds/binary-tree/tests/bin/Debug/netcoreapp2.1/binary-tree.dll
+/Users/arjan/dev/playgrounds/binary-tree/tests/bin/Debug/netcoreapp2.1/binary-tree.pdb
+/Users/arjan/dev/playgrounds/binary-tree/tests/obj/Debug/netcoreapp2.1/tests.csproj.CopyComplete
