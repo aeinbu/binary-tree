@@ -177,8 +177,6 @@ namespace binary_tree
 			}
 
 			// two legs
-
-
 			var rightNodeOfNodeToRemove = nodeToRemove.Right;
 			if (rightNodeOfNodeToRemove.Left == null)
 			{
@@ -188,9 +186,7 @@ namespace binary_tree
 			}
 
 			var replacementNode = GetLeftmostNode(rightNodeOfNodeToRemove);
-			System.Console.WriteLine($"*** replacementNode: {replacementNode}");
 			var parentOfReplacementNode = FindParentNode(replacementNode);
-			System.Console.WriteLine($"*** parentOfReplacementNode: {parentOfReplacementNode}");
 			parentOfReplacementNode.Left = replacementNode.Right;
 			legOfParentOfNodeToRemove = replacementNode;
 			replacementNode.Left = nodeToRemove.Left;
